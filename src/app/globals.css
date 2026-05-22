@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --sp-violet: #4c1d95;
+  --sp-violet-deep: #3b1578;
+  --sp-coral: #f43f5e;
+  --sp-teal: #0d9488;
+  --sp-bg: #fdf8f3;
+  --sp-card-dark: #1e1b2e;
+  --sp-ink: #1a1a2e;
+  --sp-muted: #6b7280;
+  --sp-success: #10b981;
+  --sp-gold: #f59e0b;
+  --sp-sand: #f5efe8;
+  --sp-surface: #fffdfa;
+  --sp-blush: #ffe4ec;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--sp-bg);
+  --color-foreground: var(--sp-ink);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-plus-jakarta);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--sp-bg);
+  color: var(--sp-ink);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--sp-coral) 35%, transparent);
+}
+
+.font-display {
+  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+}
+
+.sp-gradient-hero {
+  background: linear-gradient(
+    135deg,
+    var(--sp-violet) 0%,
+    color-mix(in oklab, var(--sp-coral) 70%, var(--sp-violet)) 55%,
+    var(--sp-teal) 100%
+  );
+}
+
+.sp-card {
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--sp-ink) 8%, transparent);
+  background: white;
+  box-shadow: 0 12px 40px -24px color-mix(in oklab, var(--sp-violet) 25%, transparent);
+}
+
+.sp-card-dark {
+  border-radius: 16px;
+  background: var(--sp-card-dark);
+  color: #f8f6ff;
+}
+
+@keyframes sp-pulse-ring {
+  0% {
+    stroke-dashoffset: 283;
+  }
+  100% {
+    stroke-dashoffset: var(--sp-ring-offset, 80);
+  }
+}
+
+@keyframes sp-confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.sp-animate-ring {
+  animation: sp-pulse-ring 1.2s ease-out forwards;
+}
+
+.sp-safe-bottom {
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
 }
